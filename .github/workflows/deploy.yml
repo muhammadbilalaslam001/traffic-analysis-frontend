@@ -21,4 +21,4 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /home/ubuntu/traffic-analysis
-            ./deploy.sh
+            ./.deploy-frontend.sh
