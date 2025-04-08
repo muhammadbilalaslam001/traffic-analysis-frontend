@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import CountryTrafficChart from "@/components/CountryTrafficChart";
 import VehicleTypeChart from "@/components/VehicleTypeChart";
 import {
@@ -19,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { TrafficSummary } from "@/types/traffic";
+import ChartSkeleton from "@/components/ChartSkeleton";
 
 interface DashboardProps {
   countryTraffic: TrafficSummary[];
@@ -31,10 +31,21 @@ export default function Dashboard({
 }: DashboardProps) {
   const [countryChartType, setCountryChartType] = useState("bar");
   const [vehicleChartType, setVehicleChartType] = useState("bar");
-  console.log("data is ", countryTraffic);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading finish after component mount
+  useState(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  });
+
   return (
     <div className="grid gap-6 xl:grid-cols-2">
-      <Card className="w-full lg:w-3/4 xl:w-11/12">
+      {/* <Card className="w-full lg:w-3/4 xl:w-11/12 ">
+       */}
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Country-wise Traffic</CardTitle>
@@ -51,15 +62,20 @@ export default function Dashboard({
             </SelectContent>
           </Select>
         </CardHeader>
-        <CardContent>
-          <CountryTrafficChart
-            chartType={countryChartType}
-            data={countryTraffic}
-          />
+        <CardContent className="mx-auto">
+          {isLoading ? (
+            <ChartSkeleton chartType={countryChartType} />
+          ) : (
+            <CountryTrafficChart
+              chartType={countryChartType}
+              data={countryTraffic}
+            />
+          )}
         </CardContent>
       </Card>
 
-      <Card className="w-full lg:w-3/4 xl:w-11/12">
+      {/* <Card className="w-full lg:w-3/4 xl:w-11/12"> */}
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Vehicle Type Distribution</CardTitle>
@@ -76,46 +92,17 @@ export default function Dashboard({
             </SelectContent>
           </Select>
         </CardHeader>
-        <CardContent>
-          <VehicleTypeChart
-            chartType={vehicleChartType}
-            data={vehicleTraffic}
-          />
+        <CardContent className="mx-auto">
+          {isLoading ? (
+            <ChartSkeleton chartType={vehicleChartType} />
+          ) : (
+            <VehicleTypeChart
+              chartType={vehicleChartType}
+              data={vehicleTraffic}
+            />
+          )}
         </CardContent>
       </Card>
-    </div>
-  );
-}
-
-function ChartSkeleton({ chartType }: { chartType: string }) {
-  console.log("in skeleton");
-  if (chartType === "pie") {
-    return (
-      <div className="flex h-[300px] w-full items-center justify-center">
-        <div className="relative">
-          <Skeleton className="h-[160px] w-[160px] rounded-full" />
-          <div className="absolute bottom-0 left-0 right-0">
-            <Skeleton className="mx-auto mb-4 h-4 w-[200px]" />
-            <Skeleton className="mx-auto h-4 w-[150px]" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div className="h-[300px] w-full p-4">
-      <div className="flex h-full w-full flex-col justify-between">
-        <div className="flex h-full items-end space-x-2">
-          <Skeleton className="h-[40%] w-[10%]" />
-          <Skeleton className="h-[65%] w-[10%]" />
-          <Skeleton className="h-[85%] w-[10%]" />
-          <Skeleton className="h-[50%] w-[10%]" />
-          <Skeleton className="h-[70%] w-[10%]" />
-          <Skeleton className="h-[45%] w-[10%]" />
-          <Skeleton className="h-[60%] w-[10%]" />
-        </div>
-        <Skeleton className="mt-4 h-4 w-full" />
-      </div>
     </div>
   );
 }
