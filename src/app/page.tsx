@@ -15,12 +15,6 @@ export default async function Home() {
   const countryTraffic: TrafficSummary[] = countryTrafficRes.data ?? [];
   const vehicleTraffic: TrafficSummary[] = vehicleTrafficRes.data ?? [];
 
-  // Add debugging logs
-  console.log("Country Traffic Response:", countryTrafficRes);
-  console.log("Vehicle Traffic Response:", vehicleTrafficRes);
-  console.log("Country Traffic Data:", countryTraffic);
-  console.log("Vehicle Traffic Data:", vehicleTraffic);
-
   return (
     <Suspense fallback={<Loading />}>
       <main className="min-h-screen w-full overflow-x-hidden bg-background">
