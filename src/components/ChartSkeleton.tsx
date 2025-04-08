@@ -30,7 +30,7 @@ export default function ChartSkeleton({ chartType }: { chartType: string }) {
           <div className="h-[45%] w-[10%] bg-muted/60 animate-pulse rounded-md" />
           <div className="h-[60%] w-[10%] bg-muted/60 animate-pulse rounded-md" />
         </div>
-        <div className="h-4 w-full bg-muted/60 animate-pulse rounded-md mt-4 mx-4" />
+        <div className="hidden md:flex h-4 w-full bg-muted/60 animate-pulse rounded-md mt-4 mx-4" />
       </div>
     </div>
   );

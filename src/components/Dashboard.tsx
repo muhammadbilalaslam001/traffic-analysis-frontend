@@ -33,28 +33,28 @@ export default function Dashboard({
   const [vehicleChartType, setVehicleChartType] = useState("bar");
   const [isLoading, setIsLoading] = useState(true);
 
-  // Simulate loading finish after component mount
   useEffect(() => {
-    // This prevents hydration mismatch by only showing skeletons client-side
     setIsLoading(true);
-
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 800);
-
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="grid gap-6 xl:grid-cols-2">
-      <Card className="w-full lg:w-3/4 xl:w-11/12">
-        <CardHeader className="flex flex-row items-center justify-between">
+    <div className="grid gap-6 xl:grid-cols-2 w-full">
+      <Card className="w-[90%] sm:w-[95%] xl:w-11/12 mx-auto">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div>
-            <CardTitle>Country-wise Traffic</CardTitle>
-            <CardDescription>Traffic distribution by country</CardDescription>
+            <CardTitle className="text-base sm:text-lg">
+              Country-wise Traffic
+            </CardTitle>
+            <CardDescription className="text-xs sm:text-sm">
+              Traffic distribution by country
+            </CardDescription>
           </div>
           <Select value={countryChartType} onValueChange={setCountryChartType}>
-            <SelectTrigger className="w-[120px]">
+            <SelectTrigger className="w-[100px] sm:w-[120px]">
               <SelectValue placeholder="Chart Type" />
             </SelectTrigger>
             <SelectContent>
@@ -64,9 +64,12 @@ export default function Dashboard({
             </SelectContent>
           </Select>
         </CardHeader>
-        <CardContent className="h-[340px]">
-          {/* Fixed height container */}
-          <div className="relative w-full h-full">
+        <CardContent
+          className={`h-[280px] sm:h-[340px] ${
+            !isLoading ? "mx-auto" : "mx-0"
+          }`}
+        >
+          <div className="w-full h-full">
             {isLoading ? (
               <ChartSkeleton chartType={countryChartType} />
             ) : (
@@ -79,14 +82,18 @@ export default function Dashboard({
         </CardContent>
       </Card>
 
-      <Card className="w-full lg:w-3/4 xl:w-11/12">
-        <CardHeader className="flex flex-row items-center justify-between">
+      <Card className="w-[90%] sm:w-[95%] xl:w-11/12 mx-auto">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div>
-            <CardTitle>Vehicle Type Distribution</CardTitle>
-            <CardDescription>Traffic by vehicle type</CardDescription>
+            <CardTitle className="text-base sm:text-lg">
+              Vehicle Type Distribution
+            </CardTitle>
+            <CardDescription className="text-xs sm:text-sm">
+              Traffic by vehicle type
+            </CardDescription>
           </div>
           <Select value={vehicleChartType} onValueChange={setVehicleChartType}>
-            <SelectTrigger className="w-[120px]">
+            <SelectTrigger className="w-[100px] sm:w-[120px]">
               <SelectValue placeholder="Chart Type" />
             </SelectTrigger>
             <SelectContent>
@@ -96,9 +103,12 @@ export default function Dashboard({
             </SelectContent>
           </Select>
         </CardHeader>
-        <CardContent className="h-[340px]">
-          {/* Fixed height container */}
-          <div className="relative w-full h-full">
+        <CardContent
+          className={`h-[280px] sm:h-[340px] ${
+            !isLoading ? "mx-auto" : "mx-0"
+          }`}
+        >
+          <div className="w-full h-full">
             {isLoading ? (
               <ChartSkeleton chartType={vehicleChartType} />
             ) : (

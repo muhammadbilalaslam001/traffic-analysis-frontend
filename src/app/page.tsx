@@ -17,10 +17,10 @@ export default async function Home() {
 
   return (
     <Suspense fallback={<Loading />}>
-      <main className="min-h-screen mx-auto pt-4">
-        <div className="mx-auto w-5/6">
-          <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-3xl font-bold tracking-tight">
+      <main className="min-h-screen w-full overflow-x-hidden bg-background">
+        <div className="w-[95%] sm:w-11/12 max-w-[1400px] mx-auto py-4">
+          <div className="mb-4 sm:mb-6 flex items-center justify-between">
+            <h1 className="text-lg sm:text-2xl font-bold tracking-tight">
               Traffic Data Dashboard
             </h1>
             <ThemeToggle />
