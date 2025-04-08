@@ -66,3 +66,5 @@ traffic-analysis-app-frontend/
 └── styles/             # Global styles and Tailwind configuration
 ```
 
+
+
