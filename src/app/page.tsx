@@ -13,14 +13,15 @@ export default async function Home() {
   const countryTraffic: TrafficSummary[] = countryTrafficRes.data ?? [];
   const vehicleTraffic: TrafficSummary[] = vehicleTrafficRes.data ?? [];
   return (
-    <main className="min-h-screen p-4 md:p-8">
-      <div className="mx-auto max-w-7xl">
+    <main className="min-h-screen mx-auto pt-4">
+      <div className="mx-auto w-5/6">
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-3xl font-bold tracking-tight">
             Traffic Data Dashboard
           </h1>
           <ThemeToggle />
         </div>
+
         <Dashboard
           countryTraffic={countryTraffic}
           vehicleTraffic={vehicleTraffic}

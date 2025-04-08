@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import {
   Card,
   CardContent,
@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import CountryTrafficChart from "@/components/CountryTrafficChart";
 import VehicleTypeChart from "@/components/VehicleTypeChart";
 import {
@@ -30,10 +31,10 @@ export default function Dashboard({
 }: DashboardProps) {
   const [countryChartType, setCountryChartType] = useState("bar");
   const [vehicleChartType, setVehicleChartType] = useState("bar");
-
+  console.log("data is ", countryTraffic);
   return (
-    <div className="grid gap-6 md:grid-cols-2">
-      <Card>
+    <div className="grid gap-6 xl:grid-cols-2">
+      <Card className="w-full lg:w-3/4 xl:w-11/12">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Country-wise Traffic</CardTitle>
@@ -58,7 +59,7 @@ export default function Dashboard({
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="w-full lg:w-3/4 xl:w-11/12">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Vehicle Type Distribution</CardTitle>
@@ -82,6 +83,39 @@ export default function Dashboard({
           />
         </CardContent>
       </Card>
+    </div>
+  );
+}
+
+function ChartSkeleton({ chartType }: { chartType: string }) {
+  console.log("in skeleton");
+  if (chartType === "pie") {
+    return (
+      <div className="flex h-[300px] w-full items-center justify-center">
+        <div className="relative">
+          <Skeleton className="h-[160px] w-[160px] rounded-full" />
+          <div className="absolute bottom-0 left-0 right-0">
+            <Skeleton className="mx-auto mb-4 h-4 w-[200px]" />
+            <Skeleton className="mx-auto h-4 w-[150px]" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className="h-[300px] w-full p-4">
+      <div className="flex h-full w-full flex-col justify-between">
+        <div className="flex h-full items-end space-x-2">
+          <Skeleton className="h-[40%] w-[10%]" />
+          <Skeleton className="h-[65%] w-[10%]" />
+          <Skeleton className="h-[85%] w-[10%]" />
+          <Skeleton className="h-[50%] w-[10%]" />
+          <Skeleton className="h-[70%] w-[10%]" />
+          <Skeleton className="h-[45%] w-[10%]" />
+          <Skeleton className="h-[60%] w-[10%]" />
+        </div>
+        <Skeleton className="mt-4 h-4 w-full" />
+      </div>
     </div>
   );
 }
