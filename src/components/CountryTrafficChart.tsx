@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Bar,
   BarChart,
@@ -15,11 +14,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
 import type { TrafficSummary } from "@/types/traffic";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -44,7 +38,7 @@ export default function CountryTrafficChart({
   // Check if data is empty or undefined
   if (!data || data.length === 0) {
     return (
-      <div className="flex h-[300px] w-full items-center justify-center">
+      <div className="flex h-full w-full items-center justify-center">
         <Alert variant="destructive" className="max-w-md">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>No data available</AlertTitle>
@@ -59,62 +53,50 @@ export default function CountryTrafficChart({
 
   if (chartType === "bar") {
     return (
-      <ChartContainer
-        config={{
-          count: {
-            label: "Traffic",
-            color: "var(--color-chart-1)",
-          },
-        }}
-        className="h-[300px]"
-      >
-        <BarChart
-          data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="2 2" />
-          <XAxis dataKey="country" />
-          <YAxis />
-          <ChartTooltip content={<ChartTooltipContent />} />
-          <Bar dataKey="count" fill="var(--color-chart-1)" />
-        </BarChart>
-      </ChartContainer>
+      <div className="h-full w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={data}
+            margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="country" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="count" fill="var(--color-chart-1)" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     );
   }
 
   if (chartType === "line") {
     return (
-      <ChartContainer
-        config={{
-          count: {
-            label: "Traffic",
-            color: "var(--color-chart-1)",
-          },
-        }}
-        className="h-[300px]"
-      >
-        <LineChart
-          data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="country" />
-          <YAxis />
-          <ChartTooltip content={<ChartTooltipContent />} />
-          <Line
-            type="monotone"
-            dataKey="count"
-            stroke="var(--color-chart-1)"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
-      </ChartContainer>
+      <div className="h-full w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            data={data}
+            margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="country" />
+            <YAxis />
+            <Tooltip />
+            <Line
+              type="monotone"
+              dataKey="count"
+              stroke="var(--color-chart-1)"
+              activeDot={{ r: 8 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     );
   }
 
   if (chartType === "pie") {
     return (
-      <div className="h-[300px]">
+      <div className="h-full w-full flex items-center justify-center">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -123,7 +105,7 @@ export default function CountryTrafficChart({
               nameKey="country"
               cx="50%"
               cy="50%"
-              outerRadius={80}
+              outerRadius={100}
               fill="#8884d8"
               labelLine={false}
               label={({ index, percent }) =>
@@ -138,7 +120,7 @@ export default function CountryTrafficChart({
               ))}
             </Pie>
             <Tooltip formatter={(value) => [`${value} visits`, "Traffic"]} />
-            <Legend />
+            <Legend verticalAlign="bottom" height={36} />
           </PieChart>
         </ResponsiveContainer>
       </div>

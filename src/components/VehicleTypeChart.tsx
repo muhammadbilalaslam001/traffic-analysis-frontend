@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Bar,
   BarChart,
@@ -44,7 +43,7 @@ export default function VehicleTypeChart({
   // Check if data is empty or undefined
   if (!data || data.length === 0) {
     return (
-      <div className="flex h-[300px] w-full items-center justify-center">
+      <div className="flex h-full w-full items-center justify-center">
         <Alert variant="destructive" className="max-w-md">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>No data available</AlertTitle>
@@ -59,62 +58,50 @@ export default function VehicleTypeChart({
 
   if (chartType === "bar") {
     return (
-      <ChartContainer
-        config={{
-          count: {
-            label: "Count",
-            color: "var(--color-chart-2)",
-          },
-        }}
-        className="h-[300px]"
-      >
-        <BarChart
-          data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="vehicleType" />
-          <YAxis />
-          <ChartTooltip content={<ChartTooltipContent />} />
-          <Bar dataKey="count" fill="var(--color-chart-2)" />
-        </BarChart>
-      </ChartContainer>
+      <div className="h-full w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={data}
+            margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="vehicleType" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="count" fill="var(--color-chart-2)" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     );
   }
 
   if (chartType === "line") {
     return (
-      <ChartContainer
-        config={{
-          count: {
-            label: "Count",
-            color: "var(--color-chart-2)",
-          },
-        }}
-        className="h-[300px]"
-      >
-        <LineChart
-          data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="vehicleType" />
-          <YAxis />
-          <ChartTooltip content={<ChartTooltipContent />} />
-          <Line
-            type="monotone"
-            dataKey="count"
-            stroke="var(--color-chart-2)"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
-      </ChartContainer>
+      <div className="h-full w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            data={data}
+            margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="vehicleType" />
+            <YAxis />
+            <Tooltip />
+            <Line
+              type="monotone"
+              dataKey="count"
+              stroke="var(--color-chart-2)"
+              activeDot={{ r: 8 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     );
   }
 
   if (chartType === "pie") {
     return (
-      <div className="h-[300px]">
+      <div className="h-full w-full flex items-center justify-center">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -123,7 +110,7 @@ export default function VehicleTypeChart({
               nameKey="vehicleType"
               cx="50%"
               cy="50%"
-              outerRadius={80}
+              outerRadius={100}
               fill="#8884d8"
               labelLine={false}
               label={({ index, percent }) =>
@@ -138,7 +125,7 @@ export default function VehicleTypeChart({
               ))}
             </Pie>
             <Tooltip formatter={(value) => [`${value} vehicles`, "Count"]} />
-            <Legend />
+            <Legend verticalAlign="bottom" height={36} />
           </PieChart>
         </ResponsiveContainer>
       </div>

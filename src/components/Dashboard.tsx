@@ -37,7 +37,7 @@ export default function Dashboard({
     setIsLoading(true);
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 400);
     return () => clearTimeout(timer);
   }, []);
 
@@ -64,21 +64,15 @@ export default function Dashboard({
             </SelectContent>
           </Select>
         </CardHeader>
-        <CardContent
-          className={`h-[280px] sm:h-[340px] ${
-            !isLoading ? "mx-auto" : "mx-0"
-          }`}
-        >
-          <div className="w-full h-full">
-            {isLoading ? (
-              <ChartSkeleton chartType={countryChartType} />
-            ) : (
-              <CountryTrafficChart
-                chartType={countryChartType}
-                data={countryTraffic}
-              />
-            )}
-          </div>
+        <CardContent className="h-[300px] sm:h-[340px]">
+          {isLoading ? (
+            <ChartSkeleton chartType={countryChartType} />
+          ) : (
+            <CountryTrafficChart
+              chartType={countryChartType}
+              data={countryTraffic}
+            />
+          )}
         </CardContent>
       </Card>
 
@@ -103,21 +97,15 @@ export default function Dashboard({
             </SelectContent>
           </Select>
         </CardHeader>
-        <CardContent
-          className={`h-[280px] sm:h-[340px] ${
-            !isLoading ? "mx-auto" : "mx-0"
-          }`}
-        >
-          <div className="w-full h-full">
-            {isLoading ? (
-              <ChartSkeleton chartType={vehicleChartType} />
-            ) : (
-              <VehicleTypeChart
-                chartType={vehicleChartType}
-                data={vehicleTraffic}
-              />
-            )}
-          </div>
+        <CardContent className="h-[300px] sm:h-[340px]">
+          {isLoading ? (
+            <ChartSkeleton chartType={vehicleChartType} />
+          ) : (
+            <VehicleTypeChart
+              chartType={vehicleChartType}
+              data={vehicleTraffic}
+            />
+          )}
         </CardContent>
       </Card>
     </div>
