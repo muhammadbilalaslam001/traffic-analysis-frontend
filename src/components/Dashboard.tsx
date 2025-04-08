@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -8,8 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import CountryTrafficChart from "@/components/CountryTrafficChart";
-import VehicleTypeChart from "@/components/VehicleTypeChart";
 import {
   Select,
   SelectContent,
@@ -17,6 +15,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import CountryTrafficChart from "@/components/CountryTrafficChart";
+import VehicleTypeChart from "@/components/VehicleTypeChart";
 import { TrafficSummary } from "@/types/traffic";
 import ChartSkeleton from "@/components/ChartSkeleton";
 
@@ -34,18 +34,20 @@ export default function Dashboard({
   const [isLoading, setIsLoading] = useState(true);
 
   // Simulate loading finish after component mount
-  useState(() => {
+  useEffect(() => {
+    // This prevents hydration mismatch by only showing skeletons client-side
+    setIsLoading(true);
+
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 300);
+    }, 800);
+
     return () => clearTimeout(timer);
-  });
+  }, []);
 
   return (
     <div className="grid gap-6 xl:grid-cols-2">
-      {/* <Card className="w-full lg:w-3/4 xl:w-11/12 ">
-       */}
-      <Card>
+      <Card className="w-full lg:w-3/4 xl:w-11/12">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Country-wise Traffic</CardTitle>
@@ -62,20 +64,22 @@ export default function Dashboard({
             </SelectContent>
           </Select>
         </CardHeader>
-        <CardContent className="mx-auto">
-          {isLoading ? (
-            <ChartSkeleton chartType={countryChartType} />
-          ) : (
-            <CountryTrafficChart
-              chartType={countryChartType}
-              data={countryTraffic}
-            />
-          )}
+        <CardContent className="h-[340px]">
+          {/* Fixed height container */}
+          <div className="relative w-full h-full">
+            {isLoading ? (
+              <ChartSkeleton chartType={countryChartType} />
+            ) : (
+              <CountryTrafficChart
+                chartType={countryChartType}
+                data={countryTraffic}
+              />
+            )}
+          </div>
         </CardContent>
       </Card>
 
-      {/* <Card className="w-full lg:w-3/4 xl:w-11/12"> */}
-      <Card>
+      <Card className="w-full lg:w-3/4 xl:w-11/12">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Vehicle Type Distribution</CardTitle>
@@ -92,15 +96,18 @@ export default function Dashboard({
             </SelectContent>
           </Select>
         </CardHeader>
-        <CardContent className="mx-auto">
-          {isLoading ? (
-            <ChartSkeleton chartType={vehicleChartType} />
-          ) : (
-            <VehicleTypeChart
-              chartType={vehicleChartType}
-              data={vehicleTraffic}
-            />
-          )}
+        <CardContent className="h-[340px]">
+          {/* Fixed height container */}
+          <div className="relative w-full h-full">
+            {isLoading ? (
+              <ChartSkeleton chartType={vehicleChartType} />
+            ) : (
+              <VehicleTypeChart
+                chartType={vehicleChartType}
+                data={vehicleTraffic}
+              />
+            )}
+          </div>
         </CardContent>
       </Card>
     </div>
